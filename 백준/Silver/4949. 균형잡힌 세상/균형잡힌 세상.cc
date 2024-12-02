@@ -7,11 +7,10 @@ int main(){
     cin.tie(0);
     string n;
     bool flag;
-    stack<int> s;
     getline(cin,n);
     while(n!="."){
         flag = true;
-
+        stack<int> s;
         for(auto t : n){
             if(t == '(' || t == '['){
                 s.push(t);
@@ -39,7 +38,6 @@ int main(){
         if(flag && s.empty()) cout<<"yes"<<'\n';
         else cout<<"no"<<'\n';
 
-        while(!s.empty()) s.pop();
         //다음값 입력 받기
         getline(cin,n);
     }
