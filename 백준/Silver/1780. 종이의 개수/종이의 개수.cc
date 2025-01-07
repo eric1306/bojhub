@@ -1,58 +1,39 @@
-#include <iostream>
+// Authored by : cpprhtn
+// Co-authored by : BaaaaaaaaaaarkingDog
+// http://boj.kr/b8488e82105d49e89ca6f39fd8ee665b
+#include <bits/stdc++.h>
 using namespace std;
 
-const int MAX = 2187;
-int n;
-int arr[MAX+1][MAX+1];
-int ans[3]={0,0,0};
-/*-1,0,1*/
-bool checkAll(int px, int py, int nx, int ny){
-    int num = arr[px][py];
-    for(int i = px; i<=nx;i++){
-        for(int j=py;j<=ny;j++){
-            if(arr[i][j]!=num){
-                return false;
-            }
-        }
-    }
-    return true;
+int N;
+int paper[2200][2200];
+int cnt[3]; //-1, 0, 1로 채워진 종이 갯수
+
+//해당 종이 내부에 같은 숫자로만 채워졌는지 확인하는 함수
+bool check(int x, int y, int n) {
+  for (int i = x; i < x + n; i++)
+  for (int j = y; j < y + n; j++)
+    if (paper[x][y] != paper[i][j])
+    return false;
+  return true;
 }
-void rec(int px,int py, int nx, int ny){
-    if(px > nx || py > ny) return;
-
-    if(px == nx && py == ny){
-        if(arr[px][py] == 0) ans[1]++;
-        else if(arr[px][py] == 1) ans[2]++;
-        else ans[0]++;
-        return;
-    }
-    if(!checkAll(px,py,nx,ny)){
-        int dist = (nx-px+1)/3; //
-        rec(px, py, px + dist-1, py + dist-1);
-        rec(px+dist, py, px + dist*2 - 1, py + dist-1);
-        rec(px+dist*2, py, nx, py + dist-1);
-
-        rec(px, py+dist, px + dist-1, py + dist*2-1);
-        rec(px+dist, py+dist, px + dist*2 - 1, py + dist*2-1);
-        rec(px+dist*2, py+dist, nx, py + dist*2-1);
-
-        rec(px, py+dist*2, px + dist-1, ny);
-        rec(px+dist, py+dist*2, px + dist*2 - 1, ny);
-        rec(px+dist*2, py+dist*2, nx, ny);
-    }else{
-        ans[arr[px][py]+1]++;
-    }
+void solve(int x, int y, int z)
+{
+  if (check(x, y, z)) {
+    cnt[paper[x][y] + 1] += 1;
+    return;
+  }
+  int n = z / 3;
+  for (int i = 0; i < 3; i++)
+  for (int j = 0; j < 3; j++)
+    solve(x + i * n, y + j * n, n);
 }
-
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cin>>n;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            cin>>arr[i][j];
-        }
-    }
-    rec(1,1,n,n);
-    for(int v: ans) cout<<v<<'\n';
+int main(void) {
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  cin >> N;
+  for (int i = 0; i < N; i++)
+  for (int j = 0; j < N; j++)
+    cin >> paper[i][j];
+  solve(0, 0, N);
+  for (int i = 0; i < 3; i++) cout << cnt[i] << "\n";
 }
