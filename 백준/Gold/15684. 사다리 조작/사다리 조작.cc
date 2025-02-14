@@ -5,7 +5,7 @@
 
 using namespace std;
 int board[32][20];
-int visit[32][20];
+vector<pair<int,int>> coords;
 
 int n,m,h;
 int ans = 4;
@@ -40,15 +40,14 @@ void bt(int k,int st_i){
         if(ans > k) ans = k;
         return;
     }
-    for(int i=st_i;i<h;i++){
-        for(int j=1;j<n*2;j+=2){
-            if(!visit[i][j] && board[i][j]==0 && (board[i][j-2]!=9 && board[i][j+2]!=9)){
-                visit[i][j] = 1;
-                board[i][j] = 9;
-                bt(k+1,i);
-                board[i][j] = 0;
-                visit[i][j] = 0;
-            }
+    int sz = coords.size();
+    for(int i=st_i;i<sz;i++){
+        int nx = coords[i].first;
+        int ny = coords[i].second;
+        if(board[nx][ny]==0 && (board[nx][ny-2] != 9 && board[nx][ny+2] !=9)){
+            board[nx][ny] = 9;
+            bt(k+1,i+1);
+            board[nx][ny] = 0;
         }
     }
 }
@@ -64,7 +63,10 @@ int main(){
     for(int i=0;i<m;i++){
         cin>>row>>col;
         board[row-1][(col-1)*2+1] = 9;
-        visit[row-1][(col-1)*2+1] = 1;
+    }
+    for (int i = 0; i < h; i++) for (int j = 1; j < n*2-1; j+=2) {
+        if (board[i][j - 2] || board[i][j] || board[i][j + 2]) continue;
+        coords.push_back({i, j});
     }
     bt(0,0);
     if(ans == 4) cout<<-1;
