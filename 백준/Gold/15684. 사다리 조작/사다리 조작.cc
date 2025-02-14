@@ -4,8 +4,8 @@
 #include <algorithm>
 
 using namespace std;
-int board[300][20];
-int visit[300][20];
+int board[32][20];
+int visit[32][20];
 
 int n,m,h;
 int ans = 4;
