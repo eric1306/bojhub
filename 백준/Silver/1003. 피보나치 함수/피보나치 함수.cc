@@ -1,28 +1,31 @@
 #include <iostream>
+
+#define x first
+#define y second
+
 using namespace std;
+/*idx번째 수를 위해 필요한 0과 1 개수*/
 
-// 0과 1이 각각 몇 번 출력되는지 구하는 문제
-int dp[41][2];
-void filldp(){
-    dp[0][0] = 1;
-    dp[0][1] = 0;
-    dp[1][0] = 0;
-    dp[1][1] = 1;
-
-    for(int i=2;i<=40;i++){
-        dp[i][0] = dp[i-1][0]+dp[i-2][0];
-        dp[i][1] = dp[i-1][1]+dp[i-2][1];
-    }
-    
+pair<int,int> operator+(const pair<int,int>& a1,const pair<int,int>& a2)
+{
+    pair<int,int> p = {a1.x + a2.x,a1.y+a2.y};
+    return p;
 }
-int main(){
-    filldp();
-
-    int tc,n;
-    cin>>tc;
-    while(tc--){
-        cin>>n;
-        cout<<dp[n][0]<<' '<<dp[n][1]<<'\n';
+pair<int,int> d[41];
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    d[0] = {1,0};
+    d[1] = {0,1};
+    for(int i=2;i<41;i++){
+        d[i] = d[i-1]+d[i-2];
     }
-    return 0;
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        cout<<d[n].x<<' '<<d[n].y<<'\n';
+    }
 }
