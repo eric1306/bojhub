@@ -16,14 +16,8 @@ int main(){
         long long ans = 0;
         for(int i=n-2;i>=0;i--)
         {
-            if(_max > arr[i])
-            {
-                ans += _max - arr[i];
-            }
-            else
-            {
-                _max = arr[i];
-            }
+            if(_max > arr[i]) ans += _max - arr[i];
+            else _max = arr[i];
         }
         cout<<ans<<'\n';
     }
