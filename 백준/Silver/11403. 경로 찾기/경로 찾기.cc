@@ -1,15 +1,7 @@
 //Authored by: prid1306
 #include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-
 using namespace std;
-#define X first
-#define Y second
-
 int g[101][101];
-int visit[101][101];
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -28,7 +20,7 @@ int main(){
             }
         }   
     }
-    
+
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++)
         {
