@@ -11,7 +11,7 @@ void GetPrime()
 {
     state.resize(n+1, true);
     state[1] = false;
-    for(int i=1;i*i<=n;i++)
+    for(int i=2;i*i<=n;i++)
     {
         if(!state[i]) continue;
         for(int j = i*i;j<=n;j+=i)
