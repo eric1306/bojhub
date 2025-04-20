@@ -5,15 +5,6 @@ int n,k;
 int a[200'001];
 int cnt[100'001];
 
-bool IsCorret()
-{
-    for(auto c : cnt)
-    {
-        if(c > k)
-            return false;
-    }
-    return true;
-}
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
