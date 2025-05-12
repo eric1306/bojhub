@@ -59,16 +59,17 @@ int main(){
             v[to].push_back(from);
         }
         int ret = CheckTreeIsExits();
+        cout<<"Case "<<count;
         switch(ret)
         {
             case 0:
-                cout<<"Case "<<count<<": No trees.\n";
+                cout<<": No trees.\n";
                 break;
             case 1:
-                cout<<"Case "<<count<<": There is one tree.\n";
+                cout<<": There is one tree.\n";
                 break;
             default:
-                cout<<"Case "<<count<<": A forest of "<<ret<<" trees.\n";
+                cout<<": A forest of "<<ret<<" trees.\n";
                 break;
         }
         count++;
