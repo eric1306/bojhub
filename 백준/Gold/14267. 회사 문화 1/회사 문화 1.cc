@@ -5,17 +5,7 @@
 using namespace std;
 int n,m;
 vector<int> parent(100'001, 0);
-vector<int> child[100'001];
 vector<int> ans(100'001, 0);
-
-void addpraise(int num, int praise)
-{
-    ans[num]+=praise;
-    for(auto c : child[num])
-    {
-        addpraise(c, praise);
-    }
-}
 
 int main(){
     ios::sync_with_stdio(0);
@@ -25,7 +15,6 @@ int main(){
     {
         int input;
         cin>>input;
-        child[input].push_back(i);
         parent[i] = input;
     }
     
