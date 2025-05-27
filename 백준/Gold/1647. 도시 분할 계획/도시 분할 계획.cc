@@ -7,6 +7,7 @@ using namespace std;
 int n,m,a,b,cost;
 
 vector<int> p(100002, -1);
+vector<tuple<int,int,int>> input;
 int find(int x)
 {
     if(p[x] < 0) return x;
@@ -27,7 +28,6 @@ int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     cin>>n>>m;
-    vector<tuple<int,int,int>> input;
     for(int i=0;i<m;i++)
     {
         cin>>a>>b>>cost;
@@ -39,9 +39,8 @@ int main(){
     int cnt = 0;
     for(auto v : input)
     {
-        int from,to,cost;
-        tie(cost, from, to) = v;
-        if(uni(from,to))
+        tie(cost, a, b) = v;
+        if(uni(a, b))
         {
             ans+=cost;
             cnt++;
