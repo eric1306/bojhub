@@ -3,7 +3,6 @@
 #include <algorithm>
 using namespace std;
 int d[101][101];
-int nxt[101][101];
 int ItemNum[31];
 const int INF = 0x3f3f3f3f;
 int n,m,r;
@@ -22,9 +21,7 @@ int main(){
         int a,b,l;
         cin>>a>>b>>l;
         d[a][b] = min(d[a][b],l);
-        nxt[a][b] = b;
         d[b][a] = min(d[b][a],l);
-        nxt[b][a] = a;
     }
     for(int i=1;i<=n;i++){
         d[i][i] = 0;
@@ -35,7 +32,6 @@ int main(){
                 if(d[i][j] > d[i][k] + d[k][j])
                 {
                     d[i][j] = d[i][k] + d[k][j];
-                    nxt[i][j] = nxt[i][k];
                 }
             }
         }
