@@ -6,14 +6,14 @@
 using namespace std;
 #define X first
 #define Y second
-int n,m,x;
-vector<pair<int,int>> adj[1001];
 int d[1001][1001];
 const int INF = 0x3f3f3f3f;
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
+    int n,m,x;
     cin>>n>>m>>x;
+    vector<pair<int,int>> adj[n+1];
     while(m--){
         int a,b,cost;
         cin>>a>>b>>cost;
