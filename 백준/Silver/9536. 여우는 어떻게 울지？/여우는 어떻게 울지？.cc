@@ -11,12 +11,11 @@ int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int tc;cin>>tc;
-    getline(cin,sounds);
+    cin.ignore();
     while(tc--)
     {
         //init
         m.clear();
-        string ans;
         //parsing
         getline(cin,sounds);
         while(true)
@@ -43,7 +42,7 @@ int main(){
                 }
                 if(m.find(lastSound) == m.end())
                 {
-                    ans+=lastSound;
+                    cout<<lastSound;
                 }
                 break;
             }
@@ -54,11 +53,10 @@ int main(){
             }
             if(m.find(pSound) == m.end())
             {
-                ans+=pSound;
-                ans+=" ";
+                cout<<pSound<<' ';
             }
             i=idx;
         }
-        cout<<ans<<'\n';
+        cout<<'\n';
     }
 }
