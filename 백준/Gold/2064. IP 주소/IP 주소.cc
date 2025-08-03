@@ -6,7 +6,6 @@
 #include <algorithm>
 using namespace std;
 int n;
-string Ip[1001];
 
 vector<string> ParseIP(string s){
     vector<string> ret;
@@ -60,15 +59,13 @@ int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     cin>>n;
-    vector<vector<string>> v;
-    for(int i=0;i<n;i++) cin>>Ip[i];
-    for(int i=0;i<n;i++){
-        v.push_back(ParseIP(Ip[i]));
-    }
     vector<int> values;
-    for(auto c : v){
+    for(int i=0;i<n;i++){
+        string s;
+        cin>>s;
+        vector<string> _v = ParseIP(s);
         int tmp = 0;
-        for(auto k : c){
+        for(auto k : _v){
             tmp<<=8;
             tmp+=stoi(k);
         }
