@@ -32,27 +32,17 @@ vector<string> ParseIP(string s){
 void PrintIntToIPStyle(int num)
 {
     //31~24 23~16 15~8 7~0으로 끊기
-    int num2 = 0;
-    for(int i=31;i>=24;i--){
-        if(num & 1<<i) num2++;
-        if(i!=24) num2<<=1;
+    int _num = 0;
+    for(int i=4;i>0;i--){
+        for(int j=1;j<=8;j++){
+            if(num & 1<<(i*8 - j)) _num++;
+            if(j!=8) _num<<=1;
+        }
+        if(i!=1) cout<<_num<<'.';
+        else cout<<_num;
+        _num = 0;
     }
-    cout<<num2<<'.'; num2 = 0;
-    for(int i=23;i>=16;i--){
-        if(num & 1<<i) num2++;
-        if(i!=16) num2<<=1;
-    }
-    cout<<num2<<'.'; num2 = 0;
-    for(int i=15;i>=8;i--){
-        if(num & 1<<i) num2++;
-        if(i!=8) num2<<=1;
-    }
-    cout<<num2<<'.'; num2 = 0;
-    for(int i=7;i>=0;i--){
-        if(num & 1<<i) num2++;
-        if(i!=0) num2<<=1;
-    }
-    cout<<num2<<'\n';
+    cout<<'\n';
 }
 
 int main(){
