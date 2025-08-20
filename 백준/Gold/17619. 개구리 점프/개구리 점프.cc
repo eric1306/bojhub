@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
+using tiii = tuple<int,int,int>;
 vector<int> p(1'000'001, -1);
 vector<tuple<int,int,int>> v; //startpos, endpos, num
 
@@ -16,10 +17,11 @@ int find(int x){
 bool uni(int u, int v){
     u = find(u);
     v = find(v);
-    if(u == v)
+    if(u == v){
         return false;
+    }
     if(p[v] < p[u])
-        swap(u, v);
+        swap(u,v);
     if(p[v] == p[u])
         p[u]--;
     p[v] = u;
@@ -31,23 +33,24 @@ int main(){
     cin.tie(0);
     int n,q;
     cin>>n>>q;
-    int cnt = 1;
-    while(n--){ //sorting
+    for(int i=0;i<n;i++){ //sorting
         int x1,x2,y; cin>>x1>>x2>>y;
-        v.push_back({x1, x2, cnt});
-        cnt++;
+        v.push_back({x1, x2, i+1});
     }
     sort(v.begin(),v.end());
-    //여기서 union 진행
-    for(int i=0;i<v.size()-1;i++){
-        int st,en,num,st2,en2,num2;
-        tie(st,en,num) = v[i];tie(st2,en2,num2) = v[i+1];
-        if(en >= st2){
-            uni(num, num2);
+    int st = get<0>(v[0]),en = get<1>(v[0]);
+    for(int i=1;i<v.size();i++){
+        if(get<0>(v[i]) <= en){
+            uni(get<2>(v[i]), get<2>(v[i-1]));
+            en = max(en, get<1>(v[i]));
+        }else{
+            st = get<0>(v[i]);
+            en = get<1>(v[i]);
         }
     }
     while(q--){
         int a,b;cin>>a>>b;
+        //cout<<find(a)<<" and "<<find(b)<<'\n';
         if(find(a) == find(b)) cout<<"1\n";
         else cout<<"0\n";
     }
