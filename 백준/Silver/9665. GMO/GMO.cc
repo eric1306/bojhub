@@ -1,52 +1,46 @@
+// Authored by: prid1306
+// BOJ 9665
 #include <iostream>
 #include <string>
 #include <algorithm>
 #include <vector>
 using namespace std;
+int cost[4];
+const int INF = 1e9;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+int ATN(char c){return c == 'A' ? 0 : (c == 'C' ? 1 : (c == 'G' ? 2 : 3));}
 
-    string DNA, GENE;
-    cin >> DNA >> GENE;
-    int costA, costC, costG, costT;
-    cin >> costA >> costC >> costG >> costT;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-    auto getCost = [&](char c) {
-        if (c == 'A') return costA;
-        if (c == 'C') return costC;
-        if (c == 'G') return costG;
-        return costT; // 'T'
-    };
+    string n,m;
+    cin>>n>>m;
+    int ns = n.size(),ms = m.size();
 
-    int N = DNA.size();
-    int M = GENE.size();
+    for(int i=0;i<4;i++) {cin>>cost[i];}
 
-    const int INF = 1e9;
-    vector<int> prev(M+1, INF), cur(M+1, INF);
+    vector<int> pre(ms+1, INF), cur(ms+1, INF);
 
-    // 초기 조건: DNA가 비어있을 때 (i=0)
-    prev[0] = 0;
-    for (int j = 1; j <= M; j++) {
-        prev[j] = prev[j-1] + getCost(GENE[j-1]);
+    pre[0] = 0;
+    for(int i=1;i<=ms;i++){
+        pre[i] = pre[i-1] + cost[ATN(m[i-1])];
     }
-
-    int answer = INF;
-
-    for (int i = 1; i <= N; i++) {
-        cur[0] = 0; // GENE이 비어있으면 항상 0
-        for (int j = 1; j <= M; j++) {
-            if (DNA[i-1] == GENE[j-1]) {
-                cur[j] = prev[j-1]; // 문자가 일치하면 그대로 확장
-            } else {
-                cur[j] = cur[j-1] + getCost(GENE[j-1]); // 삽입
+    
+    int ans = INF;
+    for(int i=1;i<=ns;i++){
+        cur[0] = 0;
+        for(int j=1;j<=ms;j++){
+            if(n[i-1] == m[j-1]){
+                cur[j] = pre[j-1];
+            }
+            else{
+                cur[j] = cur[j-1] + cost[ATN(m[j-1])];
             }
         }
-        answer = min(answer, cur[M]); // i번째에서 GENE 완성 가능
-        swap(prev, cur);
+        ans = min(ans, cur[ms]);
+        swap(pre,cur);
     }
-
-    cout << answer << "\n";
+    cout<<ans<< "\n";
     return 0;
 }
