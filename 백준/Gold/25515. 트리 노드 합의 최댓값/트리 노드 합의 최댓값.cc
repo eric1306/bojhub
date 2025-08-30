@@ -7,22 +7,16 @@ tree구조가 주어지고, root node에서 이웃한 노드들을 어떻게 방
 #include <vector>
 #include <algorithm>
 using namespace std;
-//subtree의 합이 0 초과일 때만 사용, 아니면 무시
-using ll = long long;
+using l = long;
 vector<int> v[100'001];
 int value[100'001];
-const ll ZERO = 0;
-ll DFS(ll cur, ll prev) //cur의 subtree에서 거치는 노드들의 합이 최대가 되도록 
+long DFS(long cur, long prev) //cur의 subtree에서 거치는 노드들의 합이 최대가 되도록 
 {
-    //cout<<"current node: "<<cur<<" prev node: "<<prev<<'\n';
-    ll ret = value[cur];
+    long ret = value[cur];
     for(int elem : v[cur]){
         if(elem == prev) continue;
-        //cout<<"subtree elem: "<<elem<<'\n';
-        ret += max(DFS(elem, cur), 0LL);
-        //cout<<"ret: "<<ret<<'\n';
+        ret += max(DFS(elem, cur), 0L);
     }
-    //cout<<"will return ret: "<<ret<<'\n';
     return ret;
 }
 
