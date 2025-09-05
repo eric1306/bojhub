@@ -4,7 +4,7 @@
 #include <set>
 #include <algorithm>
 using namespace std;
-int d[100001];
+int d[10001];
 set<int> s;
 const int INF = 1e9;
 int main(){
@@ -17,7 +17,8 @@ int main(){
         int coin;
         cin>>coin;
         s.insert(coin);
-        d[coin] = 1;
+        if(coin <= 10000)
+            d[coin] = 1; // coin <= 100'000이기 때문에 여기서 out of bounds 오류 발생
     }
     for(int i=1;i<=k;i++){
         for(int c : s){
