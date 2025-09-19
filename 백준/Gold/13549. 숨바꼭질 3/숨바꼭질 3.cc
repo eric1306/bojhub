@@ -1,44 +1,32 @@
+// Authored by: prid1306
+// BOJ 13549
 #include <iostream>
-#include <utility>
 #include <queue>
+#define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-
-const int LMT = 100001;
-int board[LMT+2];
-int sis, bro;
-queue<int> q;
-
-void teleport(int num){
-    int tmp = num;
-    if(!tmp) return;
-    while(tmp < LMT && !board[bro]){
-        if(!board[tmp]){
-            board[tmp] = board[num];
-            q.push(tmp);
-            if(tmp == bro) return;
-        }
-        tmp <<= 1;
-    }
-}
-
+const int MAX = 200'002;
+int dist[MAX];
 int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    
-    cin>>sis>>bro;
-    board[sis] = 1;
-    q.push(sis);
-    teleport(sis);
-    while(!board[bro]){
-        int v = q.front(); q.pop();
-        vector<int> nvLst = {v+1, v-1};
-        for(int nv : nvLst){
-            if(nv < 0 || LMT <= nv) continue;
-            if(board[nv]) continue;
-            board[nv] = board[v]+1;
-            q.push(nv);
-            teleport(nv);
+    FASTIO;
+    int n,k;cin>>n>>k;
+    fill(dist, dist + MAX, -1);
+    queue<int> q;
+    q.push(n);
+    dist[n] = 0;
+    while(dist[k]==-1){
+        int cur = q.front();q.pop();
+        //2배
+        if(cur <100'000){
+            int nxt = cur * 2;
+            dist[nxt] = dist[cur];
+            q.push(nxt);
+        }
+        for(int nxt : {cur - 1, cur + 1}){
+            if(nxt < 0 || nxt > 100'000) continue;
+            if(dist[nxt]!=-1) continue;
+            dist[nxt] = dist[cur] + 1;
+            q.push(nxt);
         }
     }
-    cout<<board[bro]-1;
+    cout<<dist[k]<<'\n';
 }
