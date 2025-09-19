@@ -1,60 +1,36 @@
+// Authored by: prid1306
+// BOJ 2504
 #include <iostream>
 #include <stack>
 #include <string>
+#define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-
 int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    string n;
-    int multi = 1,ans=0,cnt = 0;
-    char before;
-    cin>>n;
-    stack<int> s;
-    before = n[0];
-    for(char c : n){
-        if(c == '(' || c == '['){
-            s.push(c);
-            c == '(' ? multi*=2 : multi *=3;
-        }else{ //c is ) or ]
-            if(c == ')'){
-                /*예외처리
-                1. 배열이 빈 경우
-                2. 앞에 [ 인 경우
-                */
-                if(s.empty()){
-                    ans = 0;
-                    break;
-                }else{
-                    if(s.top() == '['){
-                        ans = 0;
-                        break;
-                    }
-                }
-
-                if(before == '(') ans+=multi;
-                s.pop();
-                multi/=2;
-            }else{ /*c == ]*/
-                /*예외처리*/
-                if(s.empty()){
-                    ans = 0;
-                    break;
-                }else{
-                    if(s.top() == '('){
-                        ans = 0;
-                        break;
-                    }
-                }
-
-                if(before == '[') ans+=multi;
-                s.pop();
-                multi/=3;
-            }
+    FASTIO;
+    stack<char> s;
+    string input;
+    cin>>input;
+    int ans = 0,mul = 1;
+    for(int i=0;i<input.size();i++)
+    {
+        if(input[i] == '('){
+            s.push(input[i]); mul*=2;
+        }else if(input[i] == '[') {
+            s.push(input[i]); mul*=3;
         }
-        before = c;
+        else if(input[i] == ')'){
+            if(s.empty() || s.top() != '('){cout<<0;return 0;}
+            s.pop();
+            if(input[i-1] == '(') ans+=mul;
+            mul/=2;
+        }else{
+            if(s.empty() || s.top() != '['){cout<<0;return 0;}
+            s.pop();
+            if(input[i-1] == '[') ans+=mul;
+            mul/=3;
+        }
+
     }
-    if(!s.empty()) ans = 0;
+    if(!s.empty()){ cout<<0;return 0;}
     cout<<ans;
-    
 }
