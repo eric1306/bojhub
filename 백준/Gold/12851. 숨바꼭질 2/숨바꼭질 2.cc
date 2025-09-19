@@ -4,7 +4,7 @@
 #include <queue>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-const int MAX = 200'002;
+const int MAX = 100'002;
 int dist[MAX];
 int cnt[MAX];
 int main(){
@@ -19,7 +19,7 @@ int main(){
         int cur = q.front();q.pop();
         for(int nxt : {cur - 1, cur + 1, cur*2})
         {
-            if(nxt < 0 || nxt > 200'000) continue;
+            if(nxt < 0 || nxt > 100'000) continue;
             if(dist[nxt] != -1 && dist[cur] + 1 > dist[nxt]) continue;
             if(dist[nxt] == -1) dist[nxt] = dist[cur] + 1;
             cnt[nxt]++;
