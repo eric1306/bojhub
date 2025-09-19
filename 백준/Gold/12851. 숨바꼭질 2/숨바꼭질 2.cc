@@ -20,10 +20,13 @@ int main(){
         for(int nxt : {cur - 1, cur + 1, cur*2})
         {
             if(nxt < 0 || nxt > 100'000) continue;
-            if(dist[nxt] != -1 && dist[cur] + 1 > dist[nxt]) continue;
-            if(dist[nxt] == -1) dist[nxt] = dist[cur] + 1;
-            cnt[nxt]++;
-            q.push(nxt);
+            if(dist[nxt] == -1) {
+                dist[nxt] = dist[cur] + 1;
+                cnt[nxt] = cnt[cur];
+                q.push(nxt);
+            }else{
+                if(dist[cur] + 1 == dist[nxt]) cnt[nxt] += cnt[cur];
+            }
         }
     }
     cout<<dist[k]<<'\n'<<cnt[k];
