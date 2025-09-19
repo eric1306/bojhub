@@ -1,20 +1,22 @@
 // Authored by: prid1306
 #include <iostream>
 #include <algorithm>
+#include <vector>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-int d[1001];
 int a[1001];
 int main(){
     FASTIO;
     int n;cin>>n;
     for(int i=1;i<=n;i++) cin>>a[i];
-    fill(d+1, d+n+1, 1);
-    for(int i=2;i<=n;i++){
-        for(int j=i-1; j>=1;j--){
-            if(a[j] < a[i])
-            d[i] = max(d[i], d[j]+ 1);
+    vector<int> lis;
+    for(int i=1;i<=n;i++){
+        auto it = lower_bound(lis.begin(), lis.end(), a[i]);
+        if (it == lis.end()) {
+            lis.push_back(a[i]);
+        }else{
+            *it = a[i];
         }
     }
-    cout<<*max_element(d+1, d+1001);
+    cout<<lis.size();
 }
