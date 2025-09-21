@@ -21,16 +21,16 @@ void BT(int k)
         ans++;
         return;
     }
-    for(int i=1;i<=n;i++){
-        if(isusedcol[i] || isusedright[i + k] || isusedleft[i + n - k])
+    for(int i=0;i<n;i++){
+        if(isusedcol[i] || isusedright[i + k] || isusedleft[i + n - k - 1])
             continue;
         isusedcol[i] = true;
         isusedright[i + k] = true;
-        isusedleft[i + n - k] = true;
+        isusedleft[i + n - k - 1] = true;
         BT(k+1);
         isusedcol[i] = false;
         isusedright[i + k] = false;
-        isusedleft[i + n - k] = false;
+        isusedleft[i + n - k - 1] = false;
     }
 }
 int main(){
