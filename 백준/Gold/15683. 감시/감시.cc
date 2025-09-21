@@ -1,126 +1,113 @@
+// Authored by: prid1306
 #include <iostream>
-#include <utility>
 #include <vector>
+#include <algorithm>
+#define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-
-int n,m;
-int ans = 0;
-
+int n,m,cctvNum, ans;
 int board[10][10];
-int board2[10][10];
-vector<pair<int,int>> v;
+int cacheBoard[10][10];
+vector<pair<int,int>> cctv;
+vector<int> cctvType;
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
 
-int dx[4] = {0,1,0,-1};
-int dy[4] = {1,0,-1,0};
-
-#define x first
-#define y second
-
-void duplicate_board(){
-    for(int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
-            board2[i][j] = board[i][j];
+int CheckBoard(){
+    int ret = 0;
+    for(int i=0;i<n;i++) for(int j=0;j<m;j++){
+        if(board[i][j] == 0){
+            ret++;
         }
+    }
+    return ret;
+}
+
+void InitializeBoard(){
+    for(int i=0;i<n;i++) for(int j=0;j<m;j++){
+        board[i][j] = cacheBoard[i][j];
     }
 }
 
-void fillboard(int type, int share ,int nx, int ny)
-{
-    int val = share % 4;
-    while(true)
-    {
-        nx += dx[val];
-        ny += dy[val];
-        if(nx < 0 || nx >= n || ny < 0 || ny >= m) break; /*잘못 들어온거임*/
-        if(board2[nx][ny] == 6) break;
-        if(board2[nx][ny]!=0) continue;
-        board2[nx][ny] = type;
+void PrintBoard(){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cout<<board[i][j]<<' ';
+        }
+        cout<<'\n';
     }
+}
+
+bool OOR(int x, int y){ //해당 idx가 범위를 벗어나면 true 반환
+    return (x < 0 || x >= n || y < 0 || y >= m);
+}
+void arrow(pair<int,int> p, int dir){
+    int x = p.first,y = p.second;
+    dir%=4;
+    while(true){
+        x += dx[dir];y +=dy[dir];
+        if(OOR(x, y) || board[x][y] == 6){
+            break;
+        }
+        board[x][y] = -1;
+    }
+}
+
+void check(int dir){
+    vector<int> cctvdir;
+    int cnt = 0;
+    while(dir > 0){
+        cctvdir.push_back(dir%4);
+        dir /= 4;
+    }
+    int amount = cctvNum - cctvdir.size();
+    if(cctvdir.size() < cctvNum){
+        while(amount--){
+            cctvdir.push_back(0);
+        }
+    }
+    for(int i=0;i<cctvNum;i++){
+        if(cctvType[i] == 1){
+            arrow(cctv[i], cctvdir[i]);
+        }else if(cctvType[i] == 2){
+            arrow(cctv[i], cctvdir[i]);
+            arrow(cctv[i], cctvdir[i]+2);
+        }else if(cctvType[i] == 3){
+            arrow(cctv[i], cctvdir[i]);
+            arrow(cctv[i], cctvdir[i]+3);
+        }else if(cctvType[i] == 4){
+            arrow(cctv[i], cctvdir[i]);
+            arrow(cctv[i], cctvdir[i]+2);
+            arrow(cctv[i], cctvdir[i]+3);
+        }else{
+            arrow(cctv[i], cctvdir[i]);
+            arrow(cctv[i], cctvdir[i]+1);
+            arrow(cctv[i], cctvdir[i]+2);
+            arrow(cctv[i], cctvdir[i]+3);
+        }
+    }
+    int cur = CheckBoard();
+    ans = min(cur, ans);
 }
 
 int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    FASTIO;
     cin>>n>>m;
-    ans = n*m;
-    for(int i=0;i<n;++i){
-        for(int j=0;j<m;++j){
-            cin>>board[i][j];
-            if(board[i][j]!=6 && board[i][j]!=0)
-                v.push_back({i,j});
+    for(int i=0;i<n;i++) for(int j=0;j<m;j++){
+        cin>>board[i][j];
+        if(board[i][j]!=0 && board[i][j]!=6){ //CCTV 위치 체크해두기
+            cctv.emplace_back(i, j);
+            cctvType.push_back(board[i][j]);
         }
+        cacheBoard[i][j] = board[i][j];
     }
-    int tmp = v.size();
-    
-    //0~4^v.size()-1
-    for(int i=0;i<(1<<2*tmp);i++)
-    {
-        duplicate_board();
-
-        int cnt = tmp > 0 ? 1<<2*(tmp-1) : 0;
-
-        vector<int> vec;
-
-        int tmpi = i;
-        int tmpdiv = tmpi;
-
-        while(cnt!=0){
-            tmpdiv = tmpdiv/cnt;
-            vec.push_back(tmpdiv);
-            tmpdiv = tmpi%cnt;
-            cnt/=4;
-        }
-
-        int idx = 0;
-        int vsize = vec.size();
-        while(idx < vsize)
-        {
-
-            pair<int,int> p = v.at(idx);
-            int temp = vec.at(idx);
-            
-            int boardspot = board2[p.x][p.y];
-            if(boardspot == 1)
-            {
-                fillboard(1,temp,p.x,p.y);
-            }
-            else if(boardspot == 2)
-            {
-                fillboard(2,temp,p.x,p.y);
-                fillboard(2,temp+2,p.x,p.y);
-            }
-            else if(boardspot == 3)
-            {
-                fillboard(3,temp,p.x,p.y);
-                fillboard(3,temp+3,p.x,p.y);
-            }
-            else if(boardspot == 4)
-            {
-                fillboard(4,temp,p.x,p.y);
-                fillboard(4,temp+2,p.x,p.y);
-                fillboard(4,temp+3,p.x,p.y);
-            }
-            else if(boardspot == 5)
-            {
-                fillboard(5,temp,p.x,p.y);
-                fillboard(5,temp+1,p.x,p.y);
-                fillboard(5,temp+2,p.x,p.y);
-                fillboard(5,temp+3,p.x,p.y);
-            }
-            ++idx;
-            if(vec.size() == 0) break;
-        }
-
-        int zerocount=0;
-        //print_board();
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<m;j++)
-            {
-                if(board2[i][j] == 0) ++zerocount;
-            }
-        }
-        if(ans > zerocount) ans = zerocount;
+    ans = n * m;
+    cctvNum = cctv.size();
+    //각 CCTV 개수 별로 4개의 방향을 꺽는 케이스 분석
+    //2^(2*n) - 1
+    for(int i=0;i<(1<<(cctvNum*2));i++){
+        check(i);
+        //PrintBoard();
+        InitializeBoard();
     }
     cout<<ans;
 }
