@@ -5,22 +5,22 @@
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
 int n;
-tuple<string, int, int, int> arr[100001];
+struct Student{
+    string name;
+    int kor;
+    int eng;
+    int math;
+};
 
-bool IsBig(char a){
-    return a >= 'A' && a <= 'Z';
-}
-bool cmp(tuple<string, int, int, int> a, tuple<string, int, int, int> b)
+Student arr[100001];
+
+
+bool cmp(Student a, Student b)
 {
-    string a_name,b_name;
-    int a_kor, a_eng, a_math, b_kor, b_eng, b_math;
-    tie(a_name, a_kor, a_eng, a_math) = a;
-    tie(b_name, b_kor, b_eng, b_math) = b;
-
-    if(a_kor != b_kor) return a_kor > b_kor;
-    if(a_eng !=b_eng) return a_eng < b_eng;
-    if(a_math != b_math) return a_math > b_math;
-    return a_name < b_name; //앞에서부터 사전순으로 비교
+    if(a.kor != b.kor) return a.kor > b.kor;
+    if(a.eng !=b.eng) return a.eng < b.eng;
+    if(a.math != b.math) return a.math > b.math;
+    return a.name < b.name; //앞에서부터 사전순으로 비교
 }
 
 int main(){
@@ -30,10 +30,10 @@ int main(){
         string name;
         int KoreanScore, EnglishScore, MathmaticsScore;
         cin>>name>>KoreanScore>>EnglishScore>>MathmaticsScore;
-        arr[i] = tuple(name, KoreanScore, EnglishScore, MathmaticsScore);
+        arr[i] = Student{name, KoreanScore, EnglishScore, MathmaticsScore};
     }
     sort(arr, arr + n, cmp);
     for(int i=0;i<n;i++){
-        cout<<get<0>(arr[i])<<'\n';
+        cout<<arr[i].name<<'\n';
     }
 }
