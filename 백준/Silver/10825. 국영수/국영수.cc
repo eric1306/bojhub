@@ -26,12 +26,12 @@ int main(){
     vector<Student> arr(n);
     for(int i=0;i<n;i++){
         string name;
-        int KoreanScore, EnglishScore, MathmaticsScore;
-        cin>>name>>KoreanScore>>EnglishScore>>MathmaticsScore;
-        arr[i] = {name, KoreanScore, EnglishScore, MathmaticsScore};
+        int K, E, M;
+        cin>>name>>K>>E>>M;
+        arr[i] = {name, K, E, M};
     }
     sort(arr.begin(), arr.end());
-    for(int i=0;i<n;i++){
-        cout<<arr[i].name<<'\n';
+    for(auto st : arr){
+        cout<<st.name<<'\n';
     }
 }
