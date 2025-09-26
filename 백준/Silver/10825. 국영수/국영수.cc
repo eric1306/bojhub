@@ -17,26 +17,10 @@ bool cmp(tuple<string, int, int, int> a, tuple<string, int, int, int> b)
     tie(a_name, a_kor, a_eng, a_math) = a;
     tie(b_name, b_kor, b_eng, b_math) = b;
 
-    if(a_kor > b_kor) return true;
-    else if(a_kor == b_kor){
-        if(a_eng < b_eng)
-            return true;
-        else if(a_eng == b_eng){
-            if(a_math > b_math)
-                return true;
-            else if(a_math == b_math){
-                for(int i=0;i<a_name.size() > b_name.size() ? b_name.size() : a_name.size();i++){
-                    if(a_name[i] == b_name[i]) continue;
-
-                    if(IsBig(a_name[i]) && !IsBig(b_name[i])) return true;
-                    else if(!IsBig(a_name[i]) && IsBig(b_name[i])) return false;
-                    else if(a_name[i] < b_name[i]) return true;
-                    else return false;
-                }
-            }
-        }
-    }
-    return false;
+    if(a_kor != b_kor) return a_kor > b_kor;
+    if(a_eng !=b_eng) return a_eng < b_eng;
+    if(a_math != b_math) return a_math > b_math;
+    return a_name < b_name; //앞에서부터 사전순으로 비교
 }
 
 int main(){
