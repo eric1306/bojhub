@@ -10,18 +10,15 @@ struct Student{
     int kor;
     int eng;
     int math;
+
+    bool operator<(Student st){
+        if(kor != st.kor) return kor > st.kor;
+        if(eng !=st.eng) return eng < st.eng;
+        if(math != st.math) return math > st.math;
+        return name < st.name; //앞에서부터 사전순으로 비교
+    }
 };
-
 Student arr[100001];
-
-
-bool cmp(Student a, Student b)
-{
-    if(a.kor != b.kor) return a.kor > b.kor;
-    if(a.eng !=b.eng) return a.eng < b.eng;
-    if(a.math != b.math) return a.math > b.math;
-    return a.name < b.name; //앞에서부터 사전순으로 비교
-}
 
 int main(){
     FASTIO;
@@ -32,7 +29,7 @@ int main(){
         cin>>name>>KoreanScore>>EnglishScore>>MathmaticsScore;
         arr[i] = Student{name, KoreanScore, EnglishScore, MathmaticsScore};
     }
-    sort(arr, arr + n, cmp);
+    sort(arr, arr + n);
     for(int i=0;i<n;i++){
         cout<<arr[i].name<<'\n';
     }
