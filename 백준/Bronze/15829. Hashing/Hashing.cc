@@ -3,10 +3,11 @@
 #include <string>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
+using ll = long long;
 const int R = 31;
 const int M = 1'234'567'891;
-int CPOW(int x){
-    int ret  = 1;
+ll CPOW(int x){
+    ll ret  = 1;
     while(x--){
         ret*= R;
         ret%=M;
@@ -17,9 +18,9 @@ int main(){
     FASTIO;
     int L;cin>>L;
     string s; cin>>s;
-    int ans = 0;
+    ll ans = 0;
     for(int i=0;i<L;i++){
-        int tmp = (s[i] - 'a' + 1) * CPOW(i) % M;
+        ll tmp = (s[i] - 'a' + 1) * CPOW(i) % M;
         ans+=tmp;
         ans%=M;
     }
