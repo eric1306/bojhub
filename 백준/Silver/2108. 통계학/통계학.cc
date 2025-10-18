@@ -11,7 +11,7 @@ int arr[8001]; //최빈값 체크용도의 배열
 
 int getAvg(const vector<int>& v)
 {
-    long long ret = 0;
+    int ret = 0;
     for(auto c : v)
     {
         ret += c;
