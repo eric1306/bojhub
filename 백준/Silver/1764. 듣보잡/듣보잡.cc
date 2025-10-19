@@ -1,32 +1,28 @@
 // Authored by: prid1306
 #include <iostream>
-#include <map>
 #include <string>
 #include <vector>
+#include <algorithm>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-map<string, int> _m;
+vector<string> v;
+vector<string> ans;
 int main(){
     FASTIO;
-    int n,m; cin>>n>>m;
-    for(int i=0;i<n;i++)
-    {
-        string s; cin>>s;
-        _m[s]++;
+    int n,m;cin>>n>>m;
+    v.resize(n);
+    for(int i=0;i<n;i++){
+        cin>>v[i];
     }
-    for(int i=0;i<m;i++)
-    {
-        string s; cin>>s;
-        _m[s]++;
+    sort(v.begin(),v.end());
+    for(int i=0;i<m;i++){
+        string s;cin>>s;
+        int idx = lower_bound(v.begin(),v.end(), s) - v.begin();
+        if(v[idx] == s && idx !=v.size()) ans.push_back(s);
     }
-    vector<string> ans;
-    for(auto c : _m){
-        if(c.second == 2){
-            ans.push_back(c.first);
-        }
-    }
+    sort(ans.begin(),ans.end());
     cout<<ans.size()<<'\n';
-    for(auto c : ans){
-        cout<<c<<'\n';
+    for(auto elem : ans){
+        cout<<elem<<'\n';
     }
 }
