@@ -1,18 +1,16 @@
 // Authored by: prid1306
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
 using ll = long long;
-
+int a[10001];
 int k,n;
-vector<int> v;
 
 bool solve(int div)
 {
     ll ret = 0;
-    for(auto elem : v)
+    for(auto elem : a)
     {
         ret += (elem/div);
     }
@@ -24,8 +22,7 @@ int main(){
     
     cin>>k>>n;
     for(int i=0;i<k;i++){
-        int input;cin>>input;
-        v.push_back(input);
+        cin>>a[i];
     }
     ll st = 1;
     ll en = 0x7fffffff; //2^31 - 1 
