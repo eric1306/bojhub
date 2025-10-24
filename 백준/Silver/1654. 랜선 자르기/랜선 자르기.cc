@@ -11,9 +11,7 @@ bool solve(int div)
 {
     ll ret = 0;
     for(auto elem : a)
-    {
-        ret += (elem/div);
-    }
+        ret += elem/div;
     return ret >= n;
 }
 
@@ -21,9 +19,8 @@ int main(){
     FASTIO;
     
     cin>>k>>n;
-    for(int i=0;i<k;i++){
+    for(int i=0;i<k;i++)
         cin>>a[i];
-    }
     ll st = 1;
     ll en = 0x7fffffff; //2^31 - 1 
     while(st < en)
