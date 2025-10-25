@@ -22,18 +22,18 @@ int main(){
         }
     }
 
-    for(int i=_min; i<=_max;i++)//최대 256
+    for(int i=_min; i<=_max;++i)//최대 256
     {
         int tmpsum = 0,tmpb = 0;
-        for(int j=0;j<=256;j++)// 256
+        for(int j=0;j<=256;++j)// 256
         {
             if(a[j] == 0) continue;
-            if(j - i >= 0)
+            if(j > i)
             {
                 tmpb += (j - i) * a[j];
                 tmpsum += 2 * (j - i) * a[j];
             }
-            else
+            else if(j < i)
             {
                 tmpb -= (i - j) * a[j];
                 tmpsum += (i - j) * a[j];
