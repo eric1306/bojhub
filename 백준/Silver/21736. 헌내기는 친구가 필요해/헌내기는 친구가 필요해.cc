@@ -18,10 +18,6 @@ bool visit[601][601];
 int n,m;
 pii doyeonPos;
 
-bool OOB(int x, int y)
-{
-    return (x < 0 || x >= n || y < 0 || y >= m);
-}
 int main(){
     FASTIO;
     cin>>n>>m;
@@ -41,12 +37,11 @@ int main(){
     while(!q.empty())
     {
         auto p = q.front(); q.pop();
-        //cout<<p.x<<' '<<p.y<<'\n';
         for(int i=0;i<4;i++)
         {
             int nx = p.x + dx[i];
             int ny = p.y + dy[i];
-            if(OOB(nx, ny)) continue;
+            if(nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
             if(visit[nx][ny]||a[nx][ny] == 'X') continue;
             if(a[nx][ny] == 'P') ans++;
             visit[nx][ny] = true;
