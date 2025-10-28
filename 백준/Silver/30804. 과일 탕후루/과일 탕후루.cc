@@ -5,6 +5,14 @@
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
 
+int CheckFruitType(const vector<int>& v)
+{
+    int ret = 0;
+    for(auto elem : v){
+        if(elem != 0) ret++;
+    }
+    return ret;
+}
 
 int main(){
     FASTIO;
@@ -19,7 +27,7 @@ int main(){
     while(r < n)
     {
         c[v[r++]]++;
-        while(10 - count(c.begin(), c.end(), 0) > 2)
+        while(CheckFruitType(c) > 2)
             c[v[l++]]--;
         ans = max(ans, r - l);
     }
