@@ -9,15 +9,13 @@ int n,m;
 int main(){
     FASTIO;
     cin>>n>>m;
-    vector<int> ladders(101, 0);
-    vector<int> snakes(101, 0);
-    for(int i=0;i<n;i++){
-        int st,en; cin>>st>>en;
-        ladders[st] = en;
+    vector<int> board(101, 0);
+    for(int i=1;i<101;i++){
+        board[i] = i;
     }
-    for(int i=0;i<m;i++){
-        int st,en;cin>>st>>en;
-        snakes[st] = en;
+    for(int i=0;i<n + m;i++){
+        int x,y;cin>>x>>y;
+        board[x] = y;
     }
     vector<int> dist(101, 0);
     queue<int> q;
@@ -33,15 +31,10 @@ int main(){
             if(dist[pos]) continue;
             dist[pos] = dist[p] + 1;
             int tmp = pos;
-            if(ladders[pos]){
-                pos = ladders[pos];
-            }
-            else if(snakes[pos]){
-                pos = snakes[pos];
-            }
-            if(dist[pos] == 0) 
+            if(board[pos])
+                pos = board[pos];
+            if(dist[pos] == 0) //차있다면 이전에 방문한 최단경로가 있다는 것
                 dist[pos] = dist[tmp];
-
             q.push(pos);
         }
     }
