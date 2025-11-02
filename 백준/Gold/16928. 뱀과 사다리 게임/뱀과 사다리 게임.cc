@@ -33,15 +33,15 @@ int main(){
             if(dist[pos]) continue;
             dist[pos] = dist[p] + 1;
             int tmp = pos;
-            while(ladders[pos]){
-                //dist[ladders[pos]] = dist[pos];
+            if(ladders[pos]){
                 pos = ladders[pos];
             }
-            while(snakes[pos]){
-                //dist[snakes[pos]] = dist[pos];
+            else if(snakes[pos]){
                 pos = snakes[pos];
             }
-            if(dist[pos] == 0) dist[pos] = dist[tmp];
+            if(dist[pos] == 0) 
+                dist[pos] = dist[tmp];
+
             q.push(pos);
         }
     }
