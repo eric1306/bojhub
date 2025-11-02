@@ -27,11 +27,10 @@ int main(){
             if(pos > 100) continue;
             if(dist[pos]) continue;
             dist[pos] = dist[p] + 1;
-            int tmp = pos;
             if(board[pos])
                 pos = board[pos];
             if(dist[pos] == 0) //차있다면 이전에 방문한 최단경로가 있다는 것
-                dist[pos] = dist[tmp];
+                dist[pos] = dist[p] + 1;
             q.push(pos);
         }
     }
