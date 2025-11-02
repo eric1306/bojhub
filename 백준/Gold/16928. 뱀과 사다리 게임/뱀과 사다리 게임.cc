@@ -10,9 +10,6 @@ int main(){
     FASTIO;
     cin>>n>>m;
     vector<int> board(101, 0);
-    for(int i=1;i<101;i++){
-        board[i] = i;
-    }
     for(int i=0;i<n + m;i++){
         int x,y;cin>>x>>y;
         board[x] = y;
