@@ -17,15 +17,6 @@ pii ChickenPos[14];
 vector<int> HouseDist;
 vector<pii> HousePos;
 
-void UpdateDistFromChickenPos(int idx)
-{
-    for(int i=0;i<HousePos.size(); i++)
-    {
-        int value = abs(HousePos[i].y - ChickenPos[idx].y) + abs(HousePos[i].x - ChickenPos[idx].x);
-        HouseDist[i] = min(HouseDist[i] , value);
-    }
-}
-
 int GetAllDist()
 {
     int ret = 0;
@@ -56,8 +47,13 @@ int main(){
         fill(HouseDist.begin(), HouseDist.end(), 1e9);
         for(int i=0;i<v.size(); ++i)
         {
-            if(v[i] == 1){
-                UpdateDistFromChickenPos(i);
+            if(v[i] == 1)
+            {
+                for(int j=0;j<HousePos.size(); j++)
+                {
+                    int value = abs(HousePos[j].y - ChickenPos[i].y) + abs(HousePos[j].x - ChickenPos[i].x);
+                    HouseDist[j] = min(HouseDist[j] , value);
+                }
             }
         }
         int tmp = GetAllDist();
