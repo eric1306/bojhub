@@ -15,16 +15,6 @@ vector<pii> ChickenPos;
 vector<int> HouseDist;
 vector<pii> HousePos;
 
-int GetAllDist()
-{
-    int ret = 0;
-    for(auto elem : HouseDist){
-        if(elem == 1e9) continue;
-        ret += elem;
-    }
-    return ret;
-}
-
 int main(){
     FASTIO;
     cin>>n>>m;
@@ -54,8 +44,12 @@ int main(){
                 }
             }
         }
-        int tmp = GetAllDist();
-        ans = min(tmp, ans);
+        int ret = 0;
+        for(auto elem : HouseDist){
+            if(elem == 1e9) continue;
+            ret += elem;
+        }
+        ans = min(ret, ans);
     }while(next_permutation(v.begin(), v.end()));
     cout<<ans;
 }
