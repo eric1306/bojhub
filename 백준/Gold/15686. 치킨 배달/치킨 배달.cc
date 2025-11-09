@@ -7,13 +7,11 @@
 using namespace std;
 #define y first
 #define x second
-int n,m,chickenCount;
+int n,m;
 int ans = 1e9;
 using pii = pair<int,int>;
-int dy[4] = {1, 0, -1, 0};
-int dx[4] = {0, 1, 0, -1};
 int board[51][51];
-pii ChickenPos[14];
+vector<pii> ChickenPos;
 vector<int> HouseDist;
 vector<pii> HousePos;
 
@@ -33,11 +31,11 @@ int main(){
     for(int i=0;i<n;i++) for(int j=0;j<n;j++){
         cin>>board[i][j];
         if(board[i][j] == 2)
-            ChickenPos[chickenCount++] = make_pair(i, j);
+            ChickenPos.emplace_back(i,j);
         else if(board[i][j] == 1)
             HousePos.emplace_back(i,j);
     }
-    vector<int> v(chickenCount, 0);
+    vector<int> v(ChickenPos.size(), 0);
     HouseDist.resize(HousePos.size(), 1e9);
     int size = static_cast<int>(v.size());
     for(int i= size - 1; i>size - 1 - m; i--){
