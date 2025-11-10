@@ -7,7 +7,7 @@ using pii = pair<int,int>;
 #define y second
 int n;
 int board[16][16];
-int d[20][20][3];
+int d[16][16][3];
 
 int main(){
     FASTIO;
