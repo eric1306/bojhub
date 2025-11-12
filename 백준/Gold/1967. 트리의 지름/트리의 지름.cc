@@ -9,18 +9,15 @@ using pii = pair<int,int>;
 #define y second
 int n;
 int ans = 0;
-bool visited[10'001];
 vector<pii> adj[10'001];
-void DFS(int st, int value)
+void DFS(int st, int value, int parent)
 {
     for(auto nxt : adj[st])
     {
-        if(visited[nxt.x]) continue;
+        if(nxt.x == parent) continue; //부모일경우 무시
         int newValue = value + nxt.y;
         ans = max(ans, newValue);
-        visited[nxt.x] = true;
-        DFS(nxt.x, newValue);
-        visited[nxt.x] = false;
+        DFS(nxt.x, newValue, st);
     }
 }
 int main(){
@@ -34,9 +31,7 @@ int main(){
     }
     //for문을 돌면서, 각 정점들끼리의 거리를 보관하는 배열 하나 생성
     for(int i=1;i<=n;i++){
-        fill(visited + 1, visited + n + 1, false);
-        visited[i] = true;
-        DFS(i, 0);
+        DFS(i, 0, -1);
     }
     cout<<ans<<'\n';
 }
