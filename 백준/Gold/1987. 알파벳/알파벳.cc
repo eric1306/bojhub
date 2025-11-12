@@ -11,9 +11,10 @@ int r,c;
 int dx[4] = {1, 0, -1, 0};
 int dy[4] = {0, 1, 0, -1};
 string board[21];
+int a[21][21];
 bool isused[27];
 int ans = 1;
-int getIdx(char c) { return static_cast<int>(c - 'A');}
+//int getIdx(char c) { return static_cast<int>(c - 'A');}
 bool OOB(int x, int y) { return (x < 0 || x >= r || y < 0 || y >= c);}
 void BT(int x, int y, int value)
 {
@@ -21,11 +22,11 @@ void BT(int x, int y, int value)
         int nx = x + dx[i];
         int ny = y + dy[i];
         if(OOB(nx, ny)) continue;
-        if(isused[getIdx(board[nx][ny])]) continue;
-        isused[getIdx(board[nx][ny])] = true;
+        if(isused[a[nx][ny]]) continue;
+        isused[a[nx][ny]] = true;
         ans = max(ans, value + 1);
         BT(nx, ny, value + 1);
-        isused[getIdx(board[nx][ny])] = false;
+        isused[a[nx][ny]] = false;
     }
 }
 int main(){
@@ -33,8 +34,12 @@ int main(){
     cin>>r>>c;
     for(int i=0;i<r;i++){
         cin>>board[i];
+        for(int j=0;j<c;j++)
+        {
+            a[i][j] = static_cast<int>(board[i][j] - 'A');
+        }
     }
-    isused[getIdx(board[0][0])] = true;
+    isused[a[0][0]] = true;
     BT(0, 0, 1);
     cout<<ans<<'\n';
 }
