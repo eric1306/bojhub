@@ -10,15 +10,16 @@ using pii = pair<int,int>;
 int n;
 int ans = 0;
 vector<pii> adj[10'001];
-void DFS(int st, int value, int parent)
+int DFS(int st, int value)
 {
+    int s=0,tmp;
     for(auto nxt : adj[st])
     {
-        if(nxt.x == parent) continue; //부모일경우 무시
-        int newValue = value + nxt.y;
-        ans = max(ans, newValue);
-        DFS(nxt.x, newValue, st);
+        tmp = DFS(nxt.x, nxt.y + value) + nxt.y;
+        ans = max(ans, s + tmp);
+        s = max(s, tmp);
     }
+    return s;
 }
 int main(){
     FASTIO;
@@ -27,11 +28,8 @@ int main(){
     {
         int p,c,v; cin>>p>>c>>v;
         adj[p].push_back(make_pair(c, v));
-        adj[c].push_back(make_pair(p, v));
     }
     //for문을 돌면서, 각 정점들끼리의 거리를 보관하는 배열 하나 생성
-    for(int i=1;i<=n;i++){
-        DFS(i, 0, -1);
-    }
+    DFS(1, 0);
     cout<<ans<<'\n';
 }
