@@ -9,7 +9,6 @@ struct Node
     int data;
     Node* left = nullptr;
     Node* right = nullptr;
-    Node* parent = nullptr;
 };
 
 void printNode(Node* node)
@@ -23,15 +22,11 @@ void AddNodeRight(Node* parent, int data)
 {
     Node* child = new Node(data);
     parent->right = child;
-    child->parent = parent;
-    parent = child;
 }
 void AddNodeLeft(Node* parent, int data)
 {
     Node* child = new Node(data);
     parent->left = child;
-    child->parent = parent;
-    parent = child;
 }
 
 int main(){
