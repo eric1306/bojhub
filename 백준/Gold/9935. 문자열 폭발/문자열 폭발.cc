@@ -10,26 +10,15 @@ string s,w;
 
 int main(){
     FASTIO;
-    /*
-    문자열 길이 1-1'000'000
-    폭발 문자열의 길이는 1-36
-    일반 find 위치 탐색 + 문자열 탐색은 시간복잡도 초과
-    -> O(SW) 는 통과할 것
-    s문자열 전체를 for문을 돌면서: O(S)
-        마지막 문자라면 임시 stack 만들어서 하나씩 조사해보기
-        이렇게 w첫번째 문자까지 맞다면 임시 스택 clear 시키면서 마무리 아니라면 stack 내역 복구
-    [2][2][a][b][][][][][][][][][][][]
-    ba22
-    */
     cin>>s>>w;
     string ans;
     int ssize = s.size();
     int wsize = w.size();
     stack<char> st;
-    for(int i = 0; i < ssize; ++i)
+    for(char ch : s)
     {
-        st.push(s[i]);
-        if(st.size() >= w.size() && s[i] == w[wsize - 1])
+        st.push(ch);
+        if(st.size() >= w.size() && ch == w[wsize - 1])
         {
             string tmp = "";
             bool IsW = true;
