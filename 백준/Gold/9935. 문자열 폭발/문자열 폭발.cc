@@ -18,6 +18,8 @@ int main(){
     s문자열 전체를 for문을 돌면서: O(S)
         마지막 문자라면 임시 stack 만들어서 하나씩 조사해보기
         이렇게 w첫번째 문자까지 맞다면 임시 스택 clear 시키면서 마무리 아니라면 stack 내역 복구
+    [2][2][a][b][][][][][][][][][][][]
+    ba22
     */
     cin>>s>>w;
     string ans;
@@ -29,33 +31,27 @@ int main(){
         st.push(s[i]);
         if(st.size() >= w.size() && s[i] == w[wsize - 1])
         {
-            stack<char> tmp;
+            string tmp = "";
             bool IsW = true;
             for(int j=wsize - 1;j >= 0; --j)
             {
-                if(st.empty())
+                if(st.top() && st.top() == w[j])
                 {
-                    IsW = false;
-                    break;
-                }
-                if(st.top() == w[j])
-                {
-                    tmp.push(st.top());
+                    tmp += st.top();
                     st.pop();
                     continue;
                 }
-                else
-                {
+                else{
                     IsW = false;
                     break;
                 }
             }
             if(IsW == false)
             {
-                while(!tmp.empty())
+                reverse(tmp.begin(),tmp.end());
+                for(auto elem : tmp)
                 {
-                    st.push(tmp.top());
-                    tmp.pop();
+                    st.push(elem);
                 }
             }
         }
