@@ -20,14 +20,14 @@ int main(){
         이렇게 w첫번째 문자까지 맞다면 임시 스택 clear 시키면서 마무리 아니라면 stack 내역 복구
     */
     cin>>s>>w;
-    vector<char> ans;
+    string ans;
     int ssize = s.size();
     int wsize = w.size();
     stack<char> st;
     for(int i = 0; i < ssize; ++i)
     {
         st.push(s[i]);
-        if(s[i] == w[wsize - 1])
+        if(st.size() >= w.size() && s[i] == w[wsize - 1])
         {
             stack<char> tmp;
             bool IsW = true;
@@ -60,15 +60,11 @@ int main(){
             }
         }
     }
-
-
     //답 추출하는 부분
-    while(!st.empty())
-    {
-        ans.push_back(st.top()); 
-        st.pop();
+    while(!st.empty()){
+        ans += st.top(); st.pop();
     }
     reverse(ans.begin(), ans.end());
     if(ans.size() == 0) cout<<"FRULA";
-    else for(auto elem : ans) cout<<elem;
+    else cout<<ans<<'\n';
 }
