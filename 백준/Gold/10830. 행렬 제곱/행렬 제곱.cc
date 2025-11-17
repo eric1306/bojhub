@@ -14,11 +14,10 @@ vvi doublematrix;
 
 vvi multimatrix(vvi mata, vvi matb)
 {
-    vvi ret(n);
+    vvi ret(n, vector<int>(n, 0));
+
     for(int i=0;i<n;i++){
-        ret[i].resize(n);
         for(int j=0;j<n;j++){
-            ret[i][j] = 0;
             for(int k=0;k<n;k++){
                 ret[i][j] = (ret[i][j] + mata[i][k] * matb[k][j])%1000;
             }
@@ -26,48 +25,32 @@ vvi multimatrix(vvi mata, vvi matb)
     }
     return ret;
 }
-vvi DQ(ull st, ull en)
-{   
-    if(en - st == 1){
-        return originmatrix;
-    }
-    else if(en - st == 2){
-        return doublematrix;
-    }
-    vvi ret;
-    if((en - st) % 2 == 0)
-    {
-        ull mid = (st + en)/2;
-        vvi mat = DQ(st, mid);
-        ret = multimatrix(mat, mat);
-    }else{
-        ull mid = (en + st + 1)/2;
-        vvi mat =  DQ(st + 1, mid);
-        ret = multimatrix(originmatrix, multimatrix(mat, mat));
-    }
-    return ret;
-}
 
 int main(){
     FASTIO;
     cin>>n>>b;
-
-    matrix.resize(n);
-    originmatrix.resize(n);
-    doublematrix.resize(n);
+    matrix.resize(n); originmatrix.resize(n);
     for(int i=0;i<n;i++) {
         matrix[i].resize(n);
         originmatrix[i].resize(n);
-        doublematrix[i].resize(n);
         for(int j=0;j<n;j++){
             cin>>matrix[i][j];
             originmatrix[i][j] = matrix[i][j];
         }
     }
 
-    doublematrix = multimatrix(originmatrix, originmatrix);
+    vvi ans(n, vector<int>(n, 0));
+    for(int i=0;i<n;i++) 
+        ans[i][i] = 1;
+    
+    while(b)
+    {
+        if(b%2 != 0)
+            ans = multimatrix(ans, matrix);
+        matrix = multimatrix(matrix, matrix);
+        b /=2;
+    }
 
-    vvi ans = DQ(0, b);
     for(auto vector : ans){
         for(auto elem : vector){
             cout<<elem%1000<<' ';
