@@ -5,37 +5,6 @@
 #include <queue>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-//중위 표기식 -> 후위 표기식으로 변환
-//ABCDE
-//+*-/
-//ABC*+DE/-
-//단순 연산자 우선순위만 따지면: ( ) * / + -
-/*
-우선 ()가 나오는 순간 바로 최우선순위가 되어야함.
-A+B*(C-D/E) 라는 연산 결과가 존재한다면?
-ABCDE/-*+
-+*-/
-A*B + C -> AB*C+
-A + B*C*D - E
-ABCD**+E-
-A + B * (c * D - E)
-ABCDE*-*+
-최근에 나온 연산자보다 높은게 나온다면
-A + B * (C - D) - E
-ABCD-*+E-
-
-A + B * (C - D * E + F) - G
-ABCDE*-F+*+G-
-A*B*C -> ABC**
-A * (B * C - D * (E * F - G))
-A * (B + C * D + E * (F - G))
-ABCD*+EFG-*+*
-B+C*D+E*(F-G)
-//*
-ABC*-DEF*G-**
-괄호가 나오면 괄호가 닫히기 전 까지 전에 있던 애들 출력 대기
-괄호 안에서도 이전 연산자와 우선순위 비교해서 낮으면 이전에 있던 연산자 모두 출력
-*/
 stack<char> op;
 string s;
 string ans = "";
