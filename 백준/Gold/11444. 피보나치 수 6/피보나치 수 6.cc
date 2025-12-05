@@ -16,32 +16,17 @@ const int MOD = 1'000'000'007;
 
 ull fibo(ull n)
 {
-    if(n == 0){
-        return 0;
-    }
-    else if(n == 1)
-    {
-        return 1;
-    }else if(n == 2){
-        return 1;
-    }
+    if(n == 0) return 0;
+    else if(n == 1) return 1;
+    else if(n == 2) return 1;
+
     auto it = m.count(n);
-    if(it != 0)
-    {
-        return m[n];
-    }
+    if(it != 0) return m[n];
+    
     if(n%2 == 0)
-    {
-        ull ret = (fibo(n/2) % MOD * (fibo(n/2 + 1) % MOD + fibo(n/2 - 1)%MOD) % MOD) % MOD;
-        m[n] = ret;
-        return ret;
-    }
-    else
-    {
-        ull ret = ((fibo(n/2 + 1)%MOD) * (fibo(n/2 + 1)%MOD) % MOD + (fibo(n/2)%MOD) * (fibo(n/2)%MOD) % MOD) % MOD;
-        m[n] = ret;
-        return ret;
-    }
+        return m[n] = (fibo(n/2) % MOD * (fibo(n/2 + 1) % MOD + fibo(n/2 - 1)%MOD) % MOD) % MOD;
+    else 
+        return m[n] = ((fibo(n/2 + 1)%MOD) * (fibo(n/2 + 1)%MOD) % MOD + (fibo(n/2)%MOD) * (fibo(n/2)%MOD) % MOD) % MOD;
 }
 int main(){
     FASTIO;
