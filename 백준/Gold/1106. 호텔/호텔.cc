@@ -1,13 +1,12 @@
 // Authored by: prid1306
 #include <iostream>
-#include <queue>
-#include <tuple>
+#include <vector>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
 vector<pair<int,int>> v; //최소공배수로 약분된 비용, 고객수가 저장된 배열
 int c,n;
-tuple<int,int, int> lastInfo;
-int d[1101]; //d[i]: 호텔의 고객 i명 늘리기 위해 형택이가 투자해야 하는 돈의 최솟값.
+int d[1100]; 
+//d[i]: 호텔의 고객 i명 늘리기 위해 형택이가 투자해야 하는 돈의 최솟값.
 //점화식 d[i] = min(d[i - cost] + number, d[i])
 //초기값: d[0] = 0;
 int main(){
