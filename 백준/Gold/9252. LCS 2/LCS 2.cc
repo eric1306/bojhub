@@ -25,7 +25,7 @@ bool 변수와 int값 두개를 두고
 */
 int d[1001][1001];
 bool issame[1001][1001];
-pair<int,int> p[1001][1001];
+pair<short,short> p[1001][1001];
 string a,b;
 vector<char> ans;
 int main(){
