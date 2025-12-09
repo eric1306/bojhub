@@ -24,8 +24,6 @@ bool 변수와 int값 두개를 두고
 
 */
 int d[1001][1001];
-bool issame[1001][1001];
-pair<short,short> p[1001][1001];
 string a,b;
 vector<char> ans;
 int main(){
@@ -42,34 +40,31 @@ int main(){
             if(a[i-1] == b[j-1])
             {
                 d[i][j] = d[i-1][j-1] + 1;
-                issame[i][j] = true;
-                p[i][j] = {i-1, j-1};
             }
             else
             {
                 d[i][j] = max(d[i-1][j], d[i][j-1]);
-                issame[i][j] = false;
-                if(d[i-1][j] > d[i][j-1])
-                {
-                    p[i][j] = {i-1, j};
-                }
-                else
-                {
-                    
-                    p[i][j] = {i, j - 1};
-                }
             }
         }
     }
     cout<<d[a.size()][b.size()]<<'\n';
+    string lcs = "";
     int x = a.size(), y = b.size();
-    while(x != 0 || y != 0)
+    while(x > 0 && y > 0)
     {
-        if(issame[x][y]) ans.emplace_back(a[x-1]);
-        auto cur = p[x][y];
-        x = cur.first;
-        y = cur.second;
+        if(a[x-1] == b[y-1])
+        {
+            lcs += a[x-1];
+            x--;y--;
+        }
+        else if(d[x][y-1] > d[x-1][y])
+        {
+            y--;
+        }
+        else{
+            x--;
+        }
     }
-    reverse(ans.begin(), ans.end());
-    for(auto elem : ans) cout<<elem;
+    reverse(lcs.begin(), lcs.end());
+    cout<<lcs;
 }
