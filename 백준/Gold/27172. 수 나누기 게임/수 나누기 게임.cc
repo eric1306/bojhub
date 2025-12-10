@@ -41,7 +41,7 @@ int main(){
         if(player[i] > _max) _max = player[i];
         board.emplace_back(player[i], i);
     }
-    sort(board.begin(), board.end(), cmp);
+    //sort(board.begin(), board.end(), cmp);
     for(auto elem : board) //n개
     {
         int cnt = elem.first * 2;
