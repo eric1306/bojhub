@@ -1,67 +1,50 @@
 // Authored by: prid1306
 #include <iostream>
 #include <unordered_map>
+#include <vector>
+#include <algorithm>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
 int t,n,m;
 unsigned long long ans;
-int a[1001][1001];
-int b[1001][1001];
+int a[1001];
+int b[1001];
+vector<int> subA;
+vector<int> subB;
 unordered_map<int,int> dt;
 
 int main(){
     FASTIO;
-    cin>>t;
-    cin>>n;
-    for(int i=0;i<n;i++)
+    cin>>t>>n;
+    int input;
+    a[0] = 0;
+    for(int i=1;i<=n;i++)
     {
-        cin>>a[i][i];
-        if(i == 0) continue;
-        for(int j=0;j<i;j++)
-        {
-            a[j][i] = a[j][i-1] + a[i][i];
-        }
+        cin>>input;
+        a[i] = a[i-1] + input;
     }
     cin>>m;
-    for(int i=0;i<m;i++)
+    b[0] = 0;
+    for(int i=1;i<=m;i++)
     {
-        cin>>b[i][i];
-        dt[b[i][i]]++;
-        if(i == 0) continue;
-        for(int j=0;j<i;j++)
-        {
-            b[j][i] = b[j][i-1] + b[i][i];
-            dt[b[j][i]]++;
-        }
+        cin>>input;
+        b[i] = b[i-1] + input;
     }
-    /*
-    a[1] / b[1] ~ b[m]
-    a[1] + a[2] / b[1] ~ b[m]
-    a[1] + ...a[n] /
-    n번 + n-1 ..... 번 : m^2*n^2;1'000'000'000 
-    어디선가 log때려야함.
-    1) 합이 T가 된다면 더이상 탐색하지 않고 종료
-    2) 한 개 배열의 부 배열의 합이 T라면 이후는 볼 필요 없음.
-    - 근데 만약 1 3 1 5 -4 | -1 이라면 얘도 부배열의 합으로 이루어짐. 따라서 2번은 오류
-    3) 
-    만약 내가 모든 부 배열의 합을 사전에 알 수 있다면?
-    부 배열의 개수는 각각 n^2, m^2개.
-    그래도 시간 초과가 날 것이다.
-    DP? 문제를 쪼갤 수가 없다.
-    */
-    for(int i=0;i<n;i++){
-        int asum = 0;
-        for(int j=i;j<n;j++)
-        {
-            asum+=a[j][j];
-            //cout<<"a i..j: "<<asum<<'\n';
-            auto it = dt.find(t - asum);
-            if(it != dt.end())
-            {
-                //cout<<"find!\n";
-                ans+=(*it).second;
-            }
-        }
+    //부 배열 구하기
+    for(int i=0;i<=n;i++) for(int j=i+1;j<=n;j++){
+        subA.push_back(a[j] - a[i]);
+    }
+    for(int i=0;i<=m;i++) for(int j=i+1;j<=m;j++){
+        subB.push_back(b[j] - b[i]);
+    }
+    if(subA.size() < subB.size())
+    {
+        std::swap(subA, subB);
+    }
+    std::sort(subA.begin(),subA.end());
+    for(int i=0;i<subB.size();i++){
+        int target = t - subB[i];
+        ans += (upper_bound(subA.begin(), subA.end(), target) - lower_bound(subA.begin(),subA.end(),target));
     }
     cout<<ans;
 }
