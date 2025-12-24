@@ -10,25 +10,6 @@ int n;
 ll ans = INF;
 vector<ll> v;
 vector<ll> an(3);
-//-12 -6 -4 4 5 6 12
-int CustomBound(int value, int f, int s) //return idx;
-{
-    int ret = -1;
-    int st = 0,en = n-1;
-    while(st <= en)
-    {
-        int mid = (st + en)/2;
-        ll sum = value + v[mid];
-        if(abs(sum) <= ans && mid != f && mid != s)
-        {
-            ans = abs(sum);
-            ret = mid;
-        }
-        if(sum > 0) en = mid - 1;
-        else st = mid + 1;
-    }
-    return ret;
-}
 int main(){
     FASTIO;
     cin>>n;
@@ -39,12 +20,19 @@ int main(){
     }
     //일단 정렬? 정렬이 주어지면 가능한게 많아지니까
     sort(v.begin(), v.end());
-    for(int i=0;i<n;i++) for(int j=i+1;j<n;j++)
+    for(int i=1;i<n-1;i++)
     {
-        int idx = CustomBound(v[i] + v[j], i, j);
-        if(idx != -1)
-        {
-            an[0] = v[i];an[1] = v[j];an[2] = v[idx];
+        int st = 0,en = n-1;
+        while(st < i && en > i)
+        {   
+            ll sum = v[st] + v[en] + v[i];
+            if(abs(sum) <= ans)
+            {
+                ans = abs(sum);
+                an[0] = v[st];an[1] = v[en];an[2] = v[i];
+            }
+            if(sum > 0) en--;
+            else st++;
         }
     }
     sort(an.begin(), an.end());
