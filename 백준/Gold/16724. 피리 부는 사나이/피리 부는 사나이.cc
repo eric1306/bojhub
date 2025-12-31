@@ -4,9 +4,6 @@
 #include <stack>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
 using namespace std;
-#define y first
-#define x second
-using pii = pair<int,int>;
 //위, 아래, 왼, 오
 int dy[4] = {-1, 1, 0, 0};
 int dx[4] = {0, 0, -1, 1};
@@ -25,17 +22,12 @@ int main(){
     if(n == 1 && m == 1){
         cout<<1; return 0;
     }
-    //i in 0~n j in 0~m
-    /*
-    뭔~가 텀 프로젝트를 활용하면 될 것 같은데?
-    */
     int cnt = 1;
     for(int i=0;i<n;i++)
     {
         for(int j=0;j<m;j++)
         {
             if(status[i][j]) continue;
-            //cout<<"("<<i<<", "<<j<<") is empty!\n";
             int ny = i,nx = j;
             while(1)
             {
