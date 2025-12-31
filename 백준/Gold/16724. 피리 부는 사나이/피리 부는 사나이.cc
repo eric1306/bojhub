@@ -3,17 +3,10 @@
 #include <string>
 #include <stack>
 #define FASTIO cin.tie(0)->ios::sync_with_stdio(0)
+using namespace std;
 #define y first
 #define x second
-
-using namespace std;
 using pii = pair<int,int>;
-enum{
-    U = 0,
-    D,
-    L,
-    R
-};
 //위, 아래, 왼, 오
 int dy[4] = {-1, 1, 0, 0};
 int dx[4] = {0, 0, -1, 1};
@@ -43,49 +36,24 @@ int main(){
         {
             if(status[i][j]) continue;
             //cout<<"("<<i<<", "<<j<<") is empty!\n";
-            stack<pii> s;
-            s.emplace(i, j);
-            while(!s.empty())
+            int ny = i,nx = j;
+            while(1)
             {
-                auto p = s.top(); s.pop();
-                //cout<<p.y<<" "<<p.x<<'\n';
-                status[p.y][p.x] = cnt;
-                int ny,nx;
-                if(board[p.y][p.x] == 'U')
+                status[ny][nx] = cnt;
+
+                switch(board[ny][nx])
                 {
-                    ny = p.y + dy[0];
-                    nx = p.x + dx[0];
+                    case 'U': ny--; break;
+                    case 'D': ny++; break;
+                    case 'L': nx--; break;
+                    case 'R': nx++; break;
                 }
-                else if(board[p.y][p.x] == 'D')
-                {
-                    ny = p.y + dy[1];
-                    nx = p.x + dx[1];
-                }
-                else if(board[p.y][p.x] == 'L')
-                {
-                    ny = p.y + dy[2];
-                    nx = p.x + dx[2];
-                }
-                else
-                {
-                    ny = p.y + dy[3];
-                    nx = p.x + dx[3];
-                }
-                if(ny < 0 || ny >= n || nx < 0 || nx >= m) continue;
-                if(status[ny][nx])
-                {
-                    //cout<<"status: "<<status[ny][nx]<<' '<<cnt<<'\n';
-                    if(status[ny][nx] == cnt) //이번 분기에 방문했던 칸을 재방문 -> SAFE ZONE
-                    {
+                if(status[ny][nx]){
+                    if(status[ny][nx] == cnt){
                         ans++;
-                        break;
                     }
-                    else
-                    {
-                        continue; //지난 분기에 방문했던 칸 재방문 -> NOT SAFE ZONE
-                    }
+                    break;
                 }
-                s.emplace(ny, nx);
             }
             cnt++;
         }
