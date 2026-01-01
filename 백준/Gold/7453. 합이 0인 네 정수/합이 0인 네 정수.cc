@@ -22,19 +22,18 @@ int main(){
     vb.resize(n);
     vc.resize(n);
     vd.resize(n);
+    sum_ab.resize(n*n);
     for(int i=0;i<n;i++)
         cin>>va[i]>>vb[i]>>vc[i]>>vd[i];
     
     for(int i=0;i<n;i++) for(int j=0;j<n;j++){
         int sum = va[i] + vb[j];
-        sum_ab.push_back(sum);
+        sum_ab[i*n + j] = sum;
     }
     sort(sum_ab.begin(), sum_ab.end());
     for(int i=0;i<n;i++) for(int j=0;j<n;j++){
         int sum = vc[i] + vd[j];
         auto it = equal_range(sum_ab.begin(), sum_ab.end(), -sum);
-        // auto it = lower_bound(sum_ab.begin(), sum_ab.end(), -sum);
-        // auto it2 = upper_bound(sum_ab.begin(), sum_ab.end(), -sum);
         if(it.first!=sum_ab.end() && *it.first == -sum)
         {
             ans += it.second - it.first;
