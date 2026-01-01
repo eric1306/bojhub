@@ -33,11 +33,8 @@ int main(){
     sort(sum_ab.begin(), sum_ab.end());
     for(int i=0;i<n;i++) for(int j=0;j<n;j++){
         int sum = vc[i] + vd[j];
-        auto it = equal_range(sum_ab.begin(), sum_ab.end(), -sum);
-        if(it.first!=sum_ab.end() && *it.first == -sum)
-        {
-            ans += it.second - it.first;
-        }
+        auto [low, high] = equal_range(sum_ab.begin(), sum_ab.end(), -sum);
+        ans += high - low;
     }
     cout<<ans;
 }
