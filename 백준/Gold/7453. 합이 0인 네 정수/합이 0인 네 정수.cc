@@ -32,11 +32,12 @@ int main(){
     sort(sum_ab.begin(), sum_ab.end());
     for(int i=0;i<n;i++) for(int j=0;j<n;j++){
         int sum = vc[i] + vd[j];
-        auto it = lower_bound(sum_ab.begin(), sum_ab.end(), -sum);
-        auto it2 = upper_bound(sum_ab.begin(), sum_ab.end(), -sum);
-        if(it!=sum_ab.end() && *it == -sum)
+        auto it = equal_range(sum_ab.begin(), sum_ab.end(), -sum);
+        // auto it = lower_bound(sum_ab.begin(), sum_ab.end(), -sum);
+        // auto it2 = upper_bound(sum_ab.begin(), sum_ab.end(), -sum);
+        if(it.first!=sum_ab.end() && *it.first == -sum)
         {
-            ans += it2 - it;
+            ans += it.second - it.first;
         }
     }
     cout<<ans;
