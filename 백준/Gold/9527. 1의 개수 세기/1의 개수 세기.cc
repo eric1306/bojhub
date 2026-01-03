@@ -7,16 +7,6 @@ const int MAX = 64;
 ull arr[MAX+1];
 ull sum_a[MAX+1];
 
-ull GetPow(int idx)
-{
-    ull ret = 1;
-    while(idx--)
-    {
-        ret *= 2;
-    }
-    return ret;
-}
-
 ull CountOne(ull comp, int idx, ull n)
 {
     if(n == 0 || idx == 0) return 0;
@@ -29,7 +19,7 @@ ull CountOne(ull comp, int idx, ull n)
         comp = comp >> 1;
         idx--;
     }
-    ull new_n = n - GetPow(idx);
+    ull new_n = n - (1ULL << idx);
     return sum_a[idx] + new_n + 1 + CountOne(comp, idx, new_n);
 }
 
