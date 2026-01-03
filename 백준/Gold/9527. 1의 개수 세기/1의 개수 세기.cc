@@ -46,8 +46,7 @@ int main(){
         _pow *= 2;
         sum += arr[i];
     }
-    
-    ull comp = 1LL << MAX-1;
+    ull comp = 1LL << (MAX-1);
     ull ans = CountOne(comp, MAX-1, b) - CountOne(comp, MAX-1, a-1);
     cout<<ans;
 }
