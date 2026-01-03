@@ -39,7 +39,6 @@ int main(){
     cin>>a>>b;
     ull _pow = 1;
     ull sum = 0;
-    sum_a[0] = 0;
     for(int i=1;i<=MAX;i++)
     {
         arr[i] = _pow + sum;
