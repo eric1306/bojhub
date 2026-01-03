@@ -48,14 +48,6 @@ int main(){
     }
     
     ull comp = 1LL << MAX-1;
-    ull ans = CountOne(comp, MAX-1, b) - CountOne(comp, MAX-1, a);
-    while(comp > 0)
-    {
-        if(a & comp)
-        {
-            ans++;
-        }
-        comp = comp >> 1;
-    }
+    ull ans = CountOne(comp, MAX-1, b) - CountOne(comp, MAX-1, a-1);
     cout<<ans;
 }
