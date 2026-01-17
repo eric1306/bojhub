@@ -27,9 +27,9 @@ int main(){
         if(_min > board[i][j]) _min = board[i][j];
         if(_max < board[i][j]) _max = board[i][j];
     }
-    int ans = 0;
+    int ans = 1;
     //i값 이하인 영역은 모두 침수라고 가정
-    for(int i=0; i<=100;i++)
+    for(int i=_min; i<=_max;i++)
     {
         int curArea = 0;
         vector<vector<bool>> visit(n, vector<bool>(n, false));
@@ -58,7 +58,6 @@ int main(){
                 curArea++;
             }
         }
-        //cout<<i<<' '<<' '<<curArea<<'\n';
         if(curArea > ans) ans = curArea;
     }
     cout<<ans;
